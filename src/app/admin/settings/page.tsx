@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import NextImage from 'next/image';
@@ -92,8 +94,8 @@ export default function AdminSettingsPage() {
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <Link 
-            href="/admin" 
+          <Link
+            href="/admin"
             className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 mb-4"
           >
             <ArrowLeft className="h-4 w-4 mr-1" />
@@ -203,18 +205,17 @@ export default function AdminSettingsPage() {
 
             {/* Message */}
             {message && (
-              <div className={`p-4 rounded-lg ${
-                message.type === 'success' 
-                  ? 'bg-green-50 text-green-700 border border-green-200' 
+              <div className={`p-4 rounded-lg ${message.type === 'success'
+                  ? 'bg-green-50 text-green-700 border border-green-200'
                   : 'bg-red-50 text-red-700 border border-red-200'
-              }`}>
+                }`}>
                 {message.text}
               </div>
             )}
 
             {/* Save Button */}
-            <Button 
-              onClick={handleSave} 
+            <Button
+              onClick={handleSave}
               isLoading={isSaving}
               className="w-full"
             >
@@ -241,7 +242,7 @@ export default function AdminSettingsPage() {
                     className="h-8 w-8 object-contain"
                   />
                 ) : (
-                  <div 
+                  <div
                     className="h-8 w-8 rounded-lg flex items-center justify-center"
                     style={{ backgroundColor: settings.primary_color + '20' }}
                   >
@@ -250,7 +251,7 @@ export default function AdminSettingsPage() {
                 )}
                 <span className="font-bold text-lg">{settings.app_name}</span>
               </div>
-              <button 
+              <button
                 className="px-4 py-2 rounded-lg text-white text-sm font-medium"
                 style={{ backgroundColor: settings.primary_color }}
               >

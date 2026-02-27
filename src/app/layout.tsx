@@ -16,7 +16,6 @@ export const metadata: Metadata = {
   description: "AI-powered symptom analysis and health education. Understand your symptoms and learn when to seek professional medical care.",
   keywords: ["health", "symptoms", "AI", "symptom checker", "healthcare", "medical education"],
   manifest: "/manifest.json",
-  themeColor: "#14b8a6",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -25,6 +24,10 @@ export const metadata: Metadata = {
   other: {
     "mobile-web-app-capable": "yes",
   },
+};
+
+export const viewport = {
+  themeColor: "#14b8a6",
 };
 
 export default function RootLayout({
