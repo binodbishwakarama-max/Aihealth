@@ -135,7 +135,7 @@ ${input.language && input.language !== 'English' ? `\nIMPORTANT: Respond with AL
     if (gemini) {
       try {
         console.log('Using Gemini AI...');
-        const model = gemini.getGenerativeModel({ model: 'gemini-2.0-flash' });
+        const model = gemini.getGenerativeModel({ model: 'gemini-2.5-flash' });
         const prompt = `${systemPrompt}\n\n${userPrompt}`;
         const result = await model.generateContent(prompt);
         const response = result.response;
@@ -369,7 +369,7 @@ ${languageInstruction}`;
   if (gemini) {
     try {
       console.log('Using Gemini Vision AI...');
-      const model = gemini.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      const model = gemini.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
       const imagePart = {
         inlineData: {
