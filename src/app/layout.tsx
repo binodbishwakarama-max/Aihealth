@@ -15,6 +15,16 @@ export const metadata: Metadata = {
   title: "HealthLens - AI Symptom Analysis",
   description: "AI-powered symptom analysis and health education. Understand your symptoms and learn when to seek professional medical care.",
   keywords: ["health", "symptoms", "AI", "symptom checker", "healthcare", "medical education"],
+  manifest: "/manifest.json",
+  themeColor: "#14b8a6",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "HealthLens",
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
+  },
 };
 
 export default function RootLayout({
@@ -25,6 +35,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+          <link rel="apple-touch-icon" href="/icons/icon-192x192.svg" />
+        </head>
         <body className={`${inter.variable} font-sans antialiased bg-gray-50`}>
           <LanguageProvider>
             <div className="min-h-screen flex flex-col">
@@ -35,6 +48,19 @@ export default function RootLayout({
               <Footer />
             </div>
           </LanguageProvider>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                if ('serviceWorker' in navigator) {
+                  window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js')
+                      .then(function(reg) { console.log('SW registered:', reg.scope); })
+                      .catch(function(err) { console.log('SW registration failed:', err); });
+                  });
+                }
+              `,
+            }}
+          />
         </body>
       </html>
     </ClerkProvider>
