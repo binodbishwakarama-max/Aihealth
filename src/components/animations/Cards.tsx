@@ -13,6 +13,9 @@ export function TiltCard({ children, className = '' }: TiltCardProps) {
   const [rotateY, setRotateY] = useState(0);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Only apply on non-touch devices (desktop) to prevent mobile flicker
+    if (window.matchMedia("(hover: none)").matches) return;
+
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -45,7 +48,7 @@ export function TiltCard({ children, className = '' }: TiltCardProps) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div style={{ transform: 'translateZ(20px)' }}>
+      <div style={{ transform: 'translateZ(20px)' }} className="md:transform-gpu lg:transform-none">
         {children}
       </div>
     </motion.div>
@@ -63,6 +66,9 @@ export function GlowCard({ children, className = '', glowColor = 'rgba(13, 148, 
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Disable on mobile/touch to prevent rendering lag
+    if (window.matchMedia("(hover: none)").matches) return;
+
     const rect = e.currentTarget.getBoundingClientRect();
     setPosition({
       x: e.clientX - rect.left,
@@ -72,16 +78,14 @@ export function GlowCard({ children, className = '', glowColor = 'rgba(13, 148, 
 
   return (
     <motion.div
-      className={`relative overflow-hidden ${className}`}
+      className={`relative overflow-hidden ${className} md:hover:scale-[1.02] transition-transform duration-200`}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.2 }}
     >
-      {/* Glow effect */}
+      {/* Glow effect - only visible on devices that support hover (desktop) */}
       <motion.div
-        className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300"
+        className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300 hidden md:block"
         style={{
           background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${glowColor}, transparent 40%)`,
         }}
@@ -101,6 +105,7 @@ export function MagneticButton({ children, className = '' }: MagneticButtonProps
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (window.matchMedia("(hover: none)").matches) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
