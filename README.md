@@ -1,252 +1,92 @@
-# CareAI - AI Health Education Assistant
+# HealthLens: AI-Powered Health Education Assistant 🩺✨
 
-A production-ready, white-label AI-powered health education platform built with Next.js 14, Supabase, and Clerk authentication.
-
-![CareAI](https://img.shields.io/badge/CareAI-Health%20Education-blue)
-![Next.js](https://img.shields.io/badge/Next.js-14-black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
-
-## ⚠️ Important Disclaimer
-
-**CareAI provides educational health information only and is NOT a substitute for professional medical advice, diagnosis, or treatment.**
-
-This application:
-- Does NOT diagnose diseases
-- Does NOT prescribe medication
-- Provides educational guidance only
-- Always recommends consulting healthcare professionals
-
-## Features
-
-### User Features
-- 🏠 **Landing Page** - Professional healthcare SaaS design with clear disclaimers
-- 🔍 **Symptom Checker** - AI-powered symptom analysis form
-- 📊 **Results Page** - Detailed health education report with risk assessment
-- 📄 **PDF Reports** - Downloadable health reports
-- 📜 **History** - View previous symptom checks (authenticated users)
-
-### Admin Features
-- 📈 **Dashboard** - Analytics with daily usage charts
-- 📋 **Symptom Table** - View all submissions with filters
-- 📤 **CSV Export** - Export data for analysis
-- 🎨 **White Label Settings** - Customize branding (name, logo, colors)
-
-## Tech Stack
-
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Database**: Supabase (PostgreSQL)
-- **Authentication**: Clerk
-- **AI**: OpenAI GPT-4o-mini
-- **Charts**: Recharts
-- **PDF**: jsPDF
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- npm or yarn
-- Supabase account
-- Clerk account
-- OpenAI API key
-
-### 1. Clone and Install
-
-```bash
-git clone <your-repo-url>
-cd aisymptom
-npm install
-```
-
-### 2. Environment Setup
-
-Copy the example environment file:
-
-```bash
-cp .env.local.example .env.local
-```
-
-Fill in your credentials:
-
-```env
-# Clerk Authentication
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
-CLERK_SECRET_KEY=sk_test_...
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
-
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-
-# OpenAI
-OPENAI_API_KEY=sk-...
-LLM_PROVIDER=openai
-
-# App
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
-
-### 3. Database Setup
-
-1. Go to your Supabase project dashboard
-2. Navigate to **SQL Editor**
-3. Run the SQL from `supabase/schema.sql`
-
-### 4. Run Development Server
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000)
-
-## Deployment
-
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Import project in Vercel
-3. Add environment variables
-4. Deploy
-
-```bash
-npm run build
-```
-
-### Environment Variables in Vercel
-
-Add all variables from `.env.local.example` to your Vercel project settings.
-
-## Project Structure
-
-```
-src/
-├── app/
-│   ├── page.tsx              # Landing page
-│   ├── checker/page.tsx      # Symptom checker form
-│   ├── result/page.tsx       # Results display
-│   ├── history/page.tsx      # User history
-│   ├── admin/
-│   │   ├── page.tsx          # Admin dashboard
-│   │   └── settings/page.tsx # White label settings
-│   ├── sign-in/              # Clerk sign in
-│   ├── sign-up/              # Clerk sign up
-│   └── api/
-│       ├── analyze/route.ts  # Symptom analysis API
-│       ├── history/route.ts  # User history API
-│       ├── settings/route.ts # Settings API
-│       └── admin/            # Admin APIs
-├── components/
-│   ├── Navbar.tsx
-│   ├── Footer.tsx
-│   ├── Disclaimer.tsx
-│   └── ui/                   # Reusable UI components
-├── lib/
-│   ├── supabase.ts          # Database client
-│   ├── ai.ts                # OpenAI integration
-│   └── utils.ts             # Utility functions
-└── middleware.ts            # Auth middleware
-```
-
-## API Routes
-
-### POST `/api/analyze`
-Analyze symptoms and get AI-generated health education.
-
-**Request:**
-```json
-{
-  "age": 30,
-  "gender": "female",
-  "symptoms": "headache and fatigue for 3 days",
-  "duration": "3-7-days",
-  "severity": 5
-}
-```
-
-**Response:**
-```json
-{
-  "id": "uuid",
-  "ai_response": {
-    "possible_conditions": ["Tension headache", "Fatigue"],
-    "risk_level": "Low",
-    "self_care": ["Rest", "Hydration"],
-    "see_doctor_if": ["Symptoms worsen"],
-    "emergency_signs": ["Severe headache with confusion"]
-  }
-}
-```
-
-### GET `/api/history`
-Get authenticated user's symptom check history.
-
-### GET `/api/admin/checks`
-Get all symptom checks with stats (admin only).
-
-### GET/POST `/api/settings`
-Get or update white label settings.
-
-## Customization
-
-### White Label Settings
-
-Access `/admin/settings` to customize:
-- App name
-- Logo URL
-- Primary color
-- Booking URL
-
-### Adding Admin Role
-
-To restrict admin access, update `middleware.ts`:
-
-```typescript
-if (isAdminRoute(req)) {
-  const user = await clerkClient.users.getUser(userId);
-  if (user.publicMetadata.role !== 'admin') {
-    return Response.redirect(new URL('/', req.url));
-  }
-}
-```
-
-Set admin role in Clerk Dashboard → Users → User → Metadata:
-```json
-{
-  "role": "admin"
-}
-```
-
-## Safety Features
-
-1. **Keyword Detection**: High-risk keywords (chest pain, breathing difficulty) automatically trigger High risk level
-2. **Severity Override**: High severity (9-10) automatically escalates risk level
-3. **Medical Disclaimers**: Displayed on landing page and results
-4. **Educational Language**: AI responses use non-diagnostic language
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License.
-
-## Support
-
-For support, please open an issue on GitHub.
+HealthLens is a modern, AI-driven web application built with **Next.js** to provide educational symptom analysis, health chatbot interactions, and rapid emergency intervention. It leverages cutting-edge Large Language Models (LLMs) and intuitive web capabilities to give users clear, personalized health insights.
 
 ---
 
-**Remember**: This is an educational tool. Always consult healthcare professionals for medical advice.
+## 🌟 Key Features
+
+### 🔍 AI Symptom Checker
+- Describe your symptoms, duration, and severity for an instant AI-powered health report. 
+- Receive risk assessments, potential conditions (educational only), and personalized self-care tips.
+- **Red Flag Detection Engine:** Automatically intercepts inputs containing high-risk symptoms (e.g., chest pain) and escalates directly to the Emergency view.
+- **Export & Share:** Download your health report as a cleanly formatted PDF or email it directly via the Resend API.
+
+### 💬 Voice-Enabled AI Chatbot
+- Have interactive follow-up conversations with the AI regarding your symptoms or general wellness.
+- **🎙️ Voice Dictation (Speech-to-Text):** Send messages to the bot using just your voice via native browser Speech Recognition.
+- **🔊 Read Aloud (Text-to-Speech):** Click the speaker icon to have the AI dictate its responses aloud (with intelligent markdown parsing).
+
+### 🚨 Live Emergency Locator
+- Instantly uses geolocation to find the nearest **hospitals, clinics, and ambulance services** using the Google Maps Places API.
+- View real-time distances, operating hours, and user ratings.
+- **One-Tap Calling:** Dynamic localized emergency dialing (automatically switches to `108` for India, `911` for US, `999` for UK, etc.).
+
+### 🗓️ Appointment Booking & History
+- Schedule consultations using the Google Calendar API.
+- Save your past symptom checks to your private account for longitudinal tracking.
+- Interactive user dashboard to view past results and risk severities.
+
+### 🌍 Internalization (i18n)
+- Built-in multi-language support (English, Hindi, Bengali, Kannada, Marathi, Tamil, Telugu, etc.) allowing users to access critical health info in their native tongue.
+
+---
+
+## 🛠️ Technology Stack
+
+**Frontend / Core:**
+- **Next.js 16** (App Router)
+- **React 19**
+- **TypeScript**
+- **Tailwind CSS v4** & **Framer Motion** for sleek, modern UI animations.
+- **Recharts** for Admin data visualization.
+- Native HTML5 Web Speech APIs.
+
+**Backend & Data Services:**
+- **Supabase** (PostgreSQL) for storing user history, appointments, and checks.
+- **Clerk** for secure user Authentication and Identity Management.
+
+**AI & External Integrations:**
+- **LLM Providers:** Configurable to run on Groq (Llama 3), OpenAI (GPT-4), or Google Gemini.
+- **Google Maps Places API** (Nearby hospital routing).
+- **Google Calendar API** (Bookings).
+- **Resend** (Emailing Health Reports).
+- **jsPDF** (Report generation).
+
+---
+
+## 🚀 Getting Started (Local Development)
+
+### 1. Prerequisites
+Ensure you have **Node.js** (v18+) and `npm` installed.
+
+### 2. Installation
+Clone the repository and install the dependencies:
+```bash
+git clone https://github.com/binodbishwakarama-max/Aihealth.git
+cd Aihealth
+npm install
+```
+
+### 3. Environment Variables
+Copy the `.env.local.example` to `.env.local`:
+```bash
+cp .env.local.example .env.local
+```
+Fill in the highly required configuration variables inside your `.env.local`:
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` & `CLERK_SECRET_KEY` (Clerk Auth)
+- `NEXT_PUBLIC_SUPABASE_URL` & `NEXT_PUBLIC_SUPABASE_ANON_KEY` (Supabase Data)
+- `GROQ_API_KEY` or `OPENAI_API_KEY` (for AI processing)
+- `GOOGLE_MAPS_API_KEY` (Required for the interactive Emergency services map)
+
+### 4. Running the App
+Start the development server:
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## ⚠️ Medical Disclaimer
+HealthLens is a health **education** platform. All analyses, suggestions, and output generated by artificial intelligence are for educational and informational purposes only and are **strictly not a substitute for professional medical diagnosis, advice, or treatment.** Always seek the advice of your physician or other qualified health providers with any questions regarding a medical condition.
