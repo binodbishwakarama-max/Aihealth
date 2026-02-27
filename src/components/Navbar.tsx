@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { Menu, X, Activity, History, Shield, CalendarPlus, MessageCircle, Globe, Ambulance } from "lucide-react";
+import { Menu, X, Activity, History, Shield, CalendarPlus, MessageCircle, Globe, Ambulance, Camera } from "lucide-react";
 import {
   SignInButton,
   SignUpButton,
@@ -31,6 +31,7 @@ export function Navbar() {
 
   const navLinks = [
     { href: "/checker", label: t.nav.symptomChecker, icon: Activity },
+    { href: "/vision", label: t.nav.visionScanner || 'Vision Scan', icon: Camera },
     { href: "/chat", label: t.nav.aiHealthChat, icon: MessageCircle },
     { href: "/book", label: t.nav.bookAppointment, icon: CalendarPlus },
     { href: "/history", label: t.nav.history, icon: History },
@@ -56,18 +57,19 @@ export function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-6">
+          <div className="hidden md:flex md:items-center md:space-x-2 lg:space-x-4">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`flex items-center space-x-1 transition-colors text-sm ${link.isEmergency
-                    ? "text-red-500 hover:text-red-600 font-medium"
-                    : "text-gray-600 hover:text-teal-600"
+                className={`flex items-center space-x-1 transition-colors text-xs lg:text-sm whitespace-nowrap ${link.isEmergency
+                  ? "text-red-500 hover:text-red-600 font-medium"
+                  : "text-gray-600 hover:text-teal-600"
                   }`}
+                title={link.label}
               >
                 <link.icon className="h-4 w-4" />
-                <span>{link.label}</span>
+                <span className="hidden lg:inline">{link.label}</span>
               </Link>
             ))}
 
@@ -101,16 +103,11 @@ export function Navbar() {
 
             {/* Auth Section */}
             <SignedOut>
-              <SignInButton mode="modal">
-                <button className="text-gray-600 hover:text-teal-600 transition-colors text-sm">
-                  {t.nav.signIn}
-                </button>
+              <SignInButton mode="modal" fallbackRedirectUrl="/">
+                <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-teal-500 to-emerald-500 text-white px-4 py-2 rounded-xl hover:from-teal-600 hover:to-emerald-600 transition-all shadow-md shadow-teal-500/25 text-sm font-semibold cursor-pointer whitespace-nowrap">
+                  Get Started
+                </span>
               </SignInButton>
-              <SignUpButton mode="modal">
-                <button className="bg-gradient-to-r from-teal-500 to-emerald-500 text-white px-4 py-2 rounded-lg hover:from-teal-600 hover:to-emerald-600 transition-all shadow-lg shadow-teal-500/25 text-sm">
-                  {t.nav.signUp}
-                </button>
-              </SignUpButton>
             </SignedOut>
             <SignedIn>
               <UserButton afterSignOutUrl="/" />
@@ -168,8 +165,8 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${link.isEmergency
-                    ? "text-red-600 hover:bg-red-50 font-medium"
-                    : "text-gray-600 hover:text-teal-600 hover:bg-teal-50"
+                  ? "text-red-600 hover:bg-red-50 font-medium"
+                  : "text-gray-600 hover:text-teal-600 hover:bg-teal-50"
                   }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -179,20 +176,13 @@ export function Navbar() {
             ))}
 
             {/* Mobile Auth */}
-            <div className="pt-2 border-t border-gray-100">
+            <div className="pt-3 border-t border-gray-100 pb-2 px-3">
               <SignedOut>
-                <div className="space-y-2">
-                  <SignInButton mode="modal">
-                    <button className="w-full text-left px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors">
-                      {t.nav.signIn}
-                    </button>
-                  </SignInButton>
-                  <SignUpButton mode="modal">
-                    <button className="w-full text-left px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
-                      {t.nav.signUp}
-                    </button>
-                  </SignUpButton>
-                </div>
+                <SignInButton mode="modal" fallbackRedirectUrl="/">
+                  <div className="w-full text-center px-4 py-3 text-white bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 rounded-xl transition-colors font-semibold shadow-md cursor-pointer">
+                    Get Started
+                  </div>
+                </SignInButton>
               </SignedOut>
               <SignedIn>
                 <div className="px-3 py-2">

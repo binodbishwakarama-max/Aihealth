@@ -7,6 +7,7 @@ const en = {
     // Navbar
     nav: {
         symptomChecker: 'Symptom Checker',
+        visionScanner: 'Vision Scanner',
         aiHealthChat: 'AI Health Chat',
         bookAppointment: 'Book Appointment',
         history: 'History',

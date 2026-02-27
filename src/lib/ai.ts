@@ -329,3 +329,91 @@ Be conversational and supportive while maintaining medical accuracy.${languageIn
 
   return "I'm having trouble processing your request. Please try again in a moment.";
 }
+
+// Vision Analysis function for analyzing visual symptoms
+export async function analyzeVision(
+  imageBase64: string,
+  mimeType: string,
+  language?: string
+): Promise<string> {
+  const languageInstruction = language && language !== 'English'
+    ? `\n\nIMPORTANT: You MUST respond entirely in ${language}. All your responses should be in ${language}.`
+    : '';
+
+  const systemPrompt = `You are HealthLens Vision AI, an innovative medical imaging assistant.
+You have been provided with an image of a symptom (e.g., a skin rash, bite, swelling, or eye condition).
+
+STRICT RULES:
+- You are strictly an educational assistant, NOT a doctor.
+- NEVER diagnose definitively.
+- Speak empathetically and clearly.
+- Describe what you see in the image clinically but simply.
+- Suggest possible common conditions that could cause this appearance (for educational purposes).
+- Advise the user on whether they should seek immediate emergency care, see a doctor soon, or if it looks like something they can manage at home with OTC care.
+- Do NOT prescribe medications.
+- Structure your response using markdown with clear headings (e.g., "What I See", "Possible Causes", "Recommended Next Steps").
+
+${languageInstruction}`;
+
+  const gemini = getGemini();
+  const openai = getOpenAI();
+
+  if (!gemini && !openai) {
+    throw new Error('No Vision AI service (Gemini or OpenAI) is currently configured.');
+  }
+
+  // Sanitize base64 string if it contains the data prefix
+  const cleanBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, '');
+
+  // Try Gemini first
+  if (gemini) {
+    try {
+      console.log('Using Gemini Vision AI...');
+      const model = gemini.getGenerativeModel({ model: 'gemini-2.0-flash' });
+
+      const imagePart = {
+        inlineData: {
+          data: cleanBase64,
+          mimeType: mimeType
+        }
+      };
+
+      const result = await model.generateContent([systemPrompt, imagePart]);
+      const response = result.response;
+      return response.text();
+    } catch (geminiError) {
+      console.error('Gemini vision error:', geminiError);
+    }
+  }
+
+  // Fallback to OpenAI
+  if (openai) {
+    try {
+      console.log('Using OpenAI Vision fallback...');
+      const response = await openai.chat.completions.create({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          {
+            role: 'user',
+            content: [
+              { type: 'text', text: 'Please analyze this image based on your instructions.' },
+              {
+                type: 'image_url',
+                image_url: {
+                  url: `data:${mimeType};base64,${cleanBase64}`
+                }
+              }
+            ]
+          }
+        ],
+        max_tokens: 1000,
+      });
+      return response.choices[0]?.message?.content || "I couldn't generate a visual analysis. Please try again.";
+    } catch (openaiError) {
+      console.error('OpenAI vision error:', openaiError);
+    }
+  }
+
+  throw new Error("I'm having trouble analyzing the image. Please try again in a moment.");
+}

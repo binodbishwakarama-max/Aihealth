@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Activity, Clock, Users, CheckCircle, ArrowRight, Heart, Stethoscope, Brain, Zap, Shield, MessageCircle } from 'lucide-react';
+import { Activity, Clock, Users, CheckCircle, ArrowRight, Heart, Stethoscope, Brain, Zap, Shield, MessageCircle, Camera } from 'lucide-react';
 import { Button } from '@/components/ui';
 import {
   AnimatedHero,
@@ -71,6 +71,20 @@ export default function HomePageClient() {
                         <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transition-all">
                           <Zap className="mr-2 h-5 w-5" />
                           {t.home.checkSymptoms}
+                          <ArrowRight className="ml-2 h-5 w-5" />
+                        </Button>
+                      </motion.div>
+                    </Link>
+                  </MagneticButton>
+                  <MagneticButton>
+                    <Link href="/vision">
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all text-white">
+                          <Camera className="mr-2 h-5 w-5" />
+                          Visual Scan
                           <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
                       </motion.div>

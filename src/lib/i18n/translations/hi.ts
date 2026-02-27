@@ -5,10 +5,12 @@ const hi = {
 
     nav: {
         symptomChecker: 'लक्षण जाँच',
+        visionScanner: 'विज़न स्कैनर',
         aiHealthChat: 'AI स्वास्थ्य चैट',
         bookAppointment: 'अपॉइंटमेंट बुक करें',
         history: 'इतिहास',
         admin: 'एडमिन',
+        emergency: 'आपातकालीन',
         signIn: 'साइन इन',
         signUp: 'साइन अप',
     },
@@ -40,7 +42,8 @@ const hi = {
         statsChecks: 'लक्षण जाँचें',
         statsConditions: 'बीमारियाँ शामिल',
         statsAvailability: 'उपलब्धता',
-        statsSatisfaction: 'संतुष्टि', whyTitle: 'HealthLens आपकी कैसे मदद करता है', whyDesc: 'हमारी AI-संचालित सुविधाओं के साथ स्वास्थ्य शिक्षा का भविष्य अनुभव करें', whySymptomEd: 'लक्षण शिक्षा', whySymptomEdDesc: 'अपने लक्षणों के संभावित कारणों के बारे में जानें।', whyAiChat: 'AI स्वास्थ्य चैट', whyAiChatDesc: 'फॉलो-अप प्रश्न पूछें और तुरंत उत्तर पाएं।', whyRisk: 'जोखिम मूल्यांकन', whyRiskDesc: 'स्वास्थ्य निर्णयों को प्राथमिकता देने के लिए जोखिम स्तर जानें।', whySeekCare: 'कब देखभाल लें', whySeekCareDesc: 'जानें कब लक्षणों को पेशेवर ध्यान की आवश्यकता है।', whySelfCare: 'स्व-देखभाल सुझाव', whySelfCareDesc: 'व्यक्तिगत स्व-देखभाल सिफारिशें प्राप्त करें।' },
+        statsSatisfaction: 'संतुष्टि', whyTitle: 'HealthLens आपकी कैसे मदद करता है', whyDesc: 'हमारी AI-संचालित सुविधाओं के साथ स्वास्थ्य शिक्षा का भविष्य अनुभव करें', whySymptomEd: 'लक्षण शिक्षा', whySymptomEdDesc: 'अपने लक्षणों के संभावित कारणों के बारे में जानें।', whyAiChat: 'AI स्वास्थ्य चैट', whyAiChatDesc: 'फॉलो-अप प्रश्न पूछें और तुरंत उत्तर पाएं।', whyRisk: 'जोखिम मूल्यांकन', whyRiskDesc: 'स्वास्थ्य निर्णयों को प्राथमिकता देने के लिए जोखिम स्तर जानें।', whySeekCare: 'कब देखभाल लें', whySeekCareDesc: 'जानें कब लक्षणों को पेशेवर ध्यान की आवश्यकता है।', whySelfCare: 'स्व-देखभाल सुझाव', whySelfCareDesc: 'व्यक्तिगत स्व-देखभाल सिफारिशें प्राप्त करें।'
+    },
 
     checker: {
         title: 'लक्षण जाँच',
