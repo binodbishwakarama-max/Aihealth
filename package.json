@@ -9,9 +9,24 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.36.10",
+    "@google/generative-ai": "^0.24.1",
+    "@supabase/supabase-js": "^2.91.1",
+    "canvas-confetti": "^1.9.4",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.29.2",
+    "googleapis": "^170.1.0",
+    "groq-sdk": "^0.37.0",
+    "jspdf": "^4.0.0",
+    "lucide-react": "^0.563.0",
     "next": "16.1.4",
+    "openai": "^6.16.0",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "recharts": "^3.7.0",
+    "resend": "^6.9.1",
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

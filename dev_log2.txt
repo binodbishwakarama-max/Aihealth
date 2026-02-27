@@ -1,0 +1,5 @@
+
+> aisymptom@0.1.0 dev
+> next dev 3005
+
+Invalid project directory provided, no such directory: D:\AIhealth\3005
