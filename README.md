@@ -1,92 +1,108 @@
-# HealthLens: AI-Powered Health Education Assistant 🩺✨
+<div align="center">
+  <img src="public/icons/icon-192x192.svg" width="100" height="100" alt="HealthLens Logo" />
+  
+  # HealthLens
+  **AI-Powered Health Education & Triage Platform**
+  
+  [![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat&logo=next.js)](https://nextjs.org/)
+  [![Supabase](https://img.shields.io/badge/Supabase-Database-3ecf8e?style=flat&logo=supabase)](https://supabase.com/)
+  [![Clerk](https://img.shields.io/badge/Clerk-Auth-6C47FF?style=flat&logo=clerk)](https://clerk.dev/)
+  [![Groq](https://img.shields.io/badge/Groq-Llama_3-f55036?style=flat)](https://groq.com/)
+  [![Google Gemini](https://img.shields.io/badge/Google-Gemini_Vision-4285F4?style=flat&logo=google)](https://deepmind.google/technologies/gemini/)
+  [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38bdf8?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+</div>
 
-HealthLens is a modern, AI-driven web application built with **Next.js** to provide educational symptom analysis, health chatbot interactions, and rapid emergency intervention. It leverages cutting-edge Large Language Models (LLMs) and intuitive web capabilities to give users clear, personalized health insights.
+<br />
 
----
+## 🚨 The Problem
+In rural and developing regions, the doctor-to-patient ratio heavily limits access to immediate healthcare advice. Patients often travel long distances or wait hours in crowded clinics just to receive basic diagnosis or triage information. 
 
-## 🌟 Key Features
-
-### 🔍 AI Symptom Checker
-- Describe your symptoms, duration, and severity for an instant AI-powered health report. 
-- Receive risk assessments, potential conditions (educational only), and personalized self-care tips.
-- **Red Flag Detection Engine:** Automatically intercepts inputs containing high-risk symptoms (e.g., chest pain) and escalates directly to the Emergency view.
-- **Export & Share:** Download your health report as a cleanly formatted PDF or email it directly via the Resend API.
-
-### 💬 Voice-Enabled AI Chatbot
-- Have interactive follow-up conversations with the AI regarding your symptoms or general wellness.
-- **🎙️ Voice Dictation (Speech-to-Text):** Send messages to the bot using just your voice via native browser Speech Recognition.
-- **🔊 Read Aloud (Text-to-Speech):** Click the speaker icon to have the AI dictate its responses aloud (with intelligent markdown parsing).
-
-### 🚨 Live Emergency Locator
-- Instantly uses geolocation to find the nearest **hospitals, clinics, and ambulance services** using the Google Maps Places API.
-- View real-time distances, operating hours, and user ratings.
-- **One-Tap Calling:** Dynamic localized emergency dialing (automatically switches to `108` for India, `911` for US, `999` for UK, etc.).
-
-### 🗓️ Appointment Booking & History
-- Schedule consultations using the Google Calendar API.
-- Save your past symptom checks to your private account for longitudinal tracking.
-- Interactive user dashboard to view past results and risk severities.
-
-### 🌍 Internalization (i18n)
-- Built-in multi-language support (English, Hindi, Bengali, Kannada, Marathi, Tamil, Telugu, etc.) allowing users to access critical health info in their native tongue.
+## 💡 The Solution: HealthLens
+HealthLens is a **Progressive Web App (PWA)** that puts a preliminary, multilingual AI doctor in the pocket of every patient. It securely analyzes text symptoms and visual conditions (rashes, skin lesions) to provide instant health education, self-care tips, and critical triage advice—including a built-in **Red Flag Emergency System** that intercepts life-threatening symptoms before they even reach the AI.
 
 ---
 
-## 🛠️ Technology Stack
+## ✨ Key Features
 
-**Frontend / Core:**
-- **Next.js 16** (App Router)
-- **React 19**
-- **TypeScript**
-- **Tailwind CSS v4** & **Framer Motion** for sleek, modern UI animations.
-- **Recharts** for Admin data visualization.
-- Native HTML5 Web Speech APIs.
+- 🏥 **Red Flag Emergency Engine:** A deterministic local rules-engine that instantly detects critical terms (e.g., "chest pain", "can't breathe") and bypasses the AI completely to direct the user to an emergency room.
+- ⚡ **Ultra-Fast Symptom Checker:** Powered by **Groq (Llama 3)**, delivering comprehensive medical educational reports in milliseconds.
+- 👁️ **Visual Symptom Scanner:** Powered by **Google Gemini 1.5 Pro Vision**, allowing users to securely upload photos of skin conditions or injuries for AI pedagogical analysis.
+- 🌐 **Full Multilingual Support:** Deep translation integration for **7 regional languages** (Hindi, Bengali, Tamil, Telugu, Kannada, Marathi, English) to serve diverse demographics.
+- 📱 **Native PWA Experience:** "Install to Home Screen" capability with offline fallback support, critical for rural users with spotty internet coverage.
+- 🎤 **Voice-to-Text & Text-to-Speech:** Accessible chat interface allowing illiterate or visually impaired patients to converse with the AI using their voice.
+- 🔒 **Enterprise-Grade Security:** Authentication via **Clerk** and HIPAA-compliant-ready architecture using **Supabase** (PostgreSQL) with Row Level Security (RLS).
 
-**Backend & Data Services:**
-- **Supabase** (PostgreSQL) for storing user history, appointments, and checks.
-- **Clerk** for secure user Authentication and Identity Management.
+---
 
-**AI & External Integrations:**
-- **LLM Providers:** Configurable to run on Groq (Llama 3), OpenAI (GPT-4), or Google Gemini.
-- **Google Maps Places API** (Nearby hospital routing).
-- **Google Calendar API** (Bookings).
-- **Resend** (Emailing Health Reports).
-- **jsPDF** (Report generation).
+## 🛠️ Architecture & Tech Stack
+
+### Frontend
+- **React 18 & Next.js 14** (App Router)
+- **Tailwind CSS & Framer Motion** (Mobile-First, fully responsive UI)
+- **Progressive Web App (PWA)** (Service Workers, Offline Caching)
+
+### Backend & Database
+- **Next.js Route Handlers** (Serverless backend API)
+- **Supabase (PostgreSQL)** (Patient history, chat logs, appointments, secure data storage)
+- **Clerk** (Secure JWT-based authentication)
+
+### AI Middleware
+- **Groq API (Llama 3 8B)** -> High-speed text-based symptom analysis and chat.
+- **Google Gemini API (Gemini 1.5 Pro Vision)** -> Advanced multimodal image analysis.
 
 ---
 
 ## 🚀 Getting Started (Local Development)
 
-### 1. Prerequisites
-Ensure you have **Node.js** (v18+) and `npm` installed.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/binodbishwakarama-max/Aihealth.git
+   cd Aihealth
+   ```
 
-### 2. Installation
-Clone the repository and install the dependencies:
-```bash
-git clone https://github.com/binodbishwakarama-max/Aihealth.git
-cd Aihealth
-npm install
-```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-### 3. Environment Variables
-Copy the `.env.local.example` to `.env.local`:
-```bash
-cp .env.local.example .env.local
-```
-Fill in the highly required configuration variables inside your `.env.local`:
-- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` & `CLERK_SECRET_KEY` (Clerk Auth)
-- `NEXT_PUBLIC_SUPABASE_URL` & `NEXT_PUBLIC_SUPABASE_ANON_KEY` (Supabase Data)
-- `GROQ_API_KEY` or `OPENAI_API_KEY` (for AI processing)
-- `GOOGLE_MAPS_API_KEY` (Required for the interactive Emergency services map)
+3. **Set up Environment Variables:**
+   Create a `.env.local` file in the root directory and add the following keys:
+   ```env
+   # Clerk Auth
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
+   CLERK_SECRET_KEY=your_clerk_secret
 
-### 4. Running the App
-Start the development server:
-```bash
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+   # Supabase Database
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role
+
+   # AI Providers
+   GROQ_API_KEY=your_groq_key
+   GEMINI_API_KEY=your_gemini_key
+   ```
+
+4. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:3000` in your browser.
 
 ---
 
-## ⚠️ Medical Disclaimer
-HealthLens is a health **education** platform. All analyses, suggestions, and output generated by artificial intelligence are for educational and informational purposes only and are **strictly not a substitute for professional medical diagnosis, advice, or treatment.** Always seek the advice of your physician or other qualified health providers with any questions regarding a medical condition.
+## 📱 PWA Testing
+To test the Progressive Web App features on a mobile device:
+1. Deploy the app to Vercel (or expose localhost via ngrok).
+2. Open the URL in Chrome (Android) or Safari (iOS).
+3. Tap **"Add to Home Screen"**.
+4. Test offline mode by turning on Airplane mode and relaunching the app.
+
+---
+
+## ⚠️ Disclaimer
+*HealthLens is designed strictly for educational and informational purposes. It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.*
+
+<br/>
+<div align="center">
+  <i>Built with ❤️ for better global healthcare.</i>
+</div>
