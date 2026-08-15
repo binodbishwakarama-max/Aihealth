@@ -14,6 +14,34 @@ interface Message {
   timestamp: Date;
 }
 
+interface SpeechRecognitionEvent {
+  resultIndex: number;
+  results: {
+    length: number;
+    [index: number]: {
+      isFinal: boolean;
+      [index: number]: {
+        transcript: string;
+      };
+    };
+  };
+}
+
+interface SpeechRecognitionErrorEvent {
+  error: string;
+}
+
+interface SpeechRecognition {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  onresult: (event: SpeechRecognitionEvent) => void;
+  onerror: (event: SpeechRecognitionErrorEvent) => void;
+  onend: () => void;
+  start: () => void;
+  stop: () => void;
+}
+
 const MessageBubble = ({ message }: { message: Message }) => {
   const isUser = message.role === 'user';
   const [isPlaying, setIsPlaying] = useState(false);
@@ -117,7 +145,7 @@ function ChatContent() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [isListening, setIsListening] = useState(false);
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -126,25 +154,25 @@ function ChatContent() {
   // Setup Speech Recognition
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      const SpeechRecognition =
+        (window as unknown as { SpeechRecognition?: new () => SpeechRecognition; webkitSpeechRecognition?: new () => SpeechRecognition }).SpeechRecognition ||
+        (window as unknown as { webkitSpeechRecognition?: new () => SpeechRecognition }).webkitSpeechRecognition;
+
       if (SpeechRecognition) {
         recognitionRef.current = new SpeechRecognition();
         recognitionRef.current.continuous = true;
         recognitionRef.current.interimResults = true;
         recognitionRef.current.lang = languageName === 'English' ? 'en-US' : (languageName.substring(0, 2) + '-IN'); // Basic localization map
 
-        recognitionRef.current.onresult = (event: any) => {
-          let currentTranscript = '';
+        recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
           for (let i = event.resultIndex; i < event.results.length; ++i) {
             if (event.results[i].isFinal) {
               setInput((prev) => prev + event.results[i][0].transcript + ' ');
-            } else {
-              currentTranscript += event.results[i][0].transcript;
             }
           }
         };
 
-        recognitionRef.current.onerror = (event: any) => {
+        recognitionRef.current.onerror = (event: SpeechRecognitionErrorEvent) => {
           console.warn('Speech recognition warning:', event.error);
           setIsListening(false);
 

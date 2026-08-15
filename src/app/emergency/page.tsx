@@ -12,7 +12,6 @@ import {
     Star,
     Clock,
     Navigation,
-    Loader2,
     ExternalLink,
     Ambulance,
     Building2,

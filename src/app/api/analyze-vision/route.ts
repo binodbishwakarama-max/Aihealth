@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { analyzeVision } from '@/lib/ai';
 import { checkRateLimit, rateLimitResponse, getClientIP, logSecurityEvent } from '@/lib/security';
-import { auth } from '@clerk/nextjs/server';
 
 const RATE_LIMIT_CONFIG = {
     windowMs: 60 * 1000,
@@ -45,10 +44,11 @@ export async function POST(request: NextRequest) {
             }
         );
 
-    } catch (error: any) {
+    } catch (error) {
         console.error('Vision API error:', error);
+        const errorMessage = error instanceof Error ? error.message : 'Failed to analyze symptoms visually.';
         return NextResponse.json(
-            { error: error?.message || 'Failed to analyze symptoms visually.' },
+            { error: errorMessage },
             { status: 500 }
         );
     }

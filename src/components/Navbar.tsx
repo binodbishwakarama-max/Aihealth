@@ -5,7 +5,6 @@ import { useState, useRef, useEffect } from "react";
 import { Menu, X, Activity, History, Shield, CalendarPlus, MessageCircle, Globe, Ambulance, Camera } from "lucide-react";
 import {
   SignInButton,
-  SignUpButton,
   SignedIn,
   SignedOut,
   UserButton,

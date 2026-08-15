@@ -7,7 +7,7 @@ import { useLanguage } from '@/lib/i18n';
 import ReactMarkdown from 'react-markdown';
 
 export default function VisionPage() {
-    const { t, languageName } = useLanguage();
+    const { languageName } = useLanguage();
     const [image, setImage] = useState<string | null>(null);
     const [mimeType, setMimeType] = useState<string>('');
     const [analysis, setAnalysis] = useState<string | null>(null);
@@ -65,9 +65,10 @@ export default function VisionPage() {
             }
 
             setAnalysis(data.analysis);
-        } catch (err: any) {
+        } catch (err) {
             console.error(err);
-            setError(err.message || 'An error occurred during specific visual analysis.');
+            const errorMessage = err instanceof Error ? err.message : 'An error occurred during specific visual analysis.';
+            setError(errorMessage);
         } finally {
             setIsAnalyzing(false);
         }
