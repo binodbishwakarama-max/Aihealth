@@ -39,6 +39,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <head>
+          <link rel="icon" href="/icons/icon-192x192.svg" type="image/svg+xml" />
           <link rel="apple-touch-icon" href="/icons/icon-192x192.svg" />
         </head>
         <body className={`${inter.variable} font-sans antialiased bg-gray-50`}>

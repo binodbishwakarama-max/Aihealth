@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { Menu, X, Activity, History, Shield, CalendarPlus, MessageCircle, Globe, Ambulance, Camera } from "lucide-react";
 import {
@@ -46,12 +47,18 @@ export function Navbar() {
         <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="relative">
-                <Activity className="h-8 w-8 text-teal-600" />
-                <span className="absolute -top-1 -right-1 h-3 w-3 bg-orange-500 rounded-full animate-pulse" />
+            <Link href="/" className="flex items-center space-x-2.5 group">
+              <div className="relative flex items-center justify-center transition-transform group-hover:scale-105">
+                <Image
+                  src="/icons/icon-96x96.svg"
+                  alt="HealthLens Logo"
+                  width={34}
+                  height={34}
+                  className="rounded-xl shadow-sm"
+                  priority
+                />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent">HealthLens</span>
+              <span className="text-xl font-bold bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 bg-clip-text text-transparent">HealthLens</span>
             </Link>
           </div>
 
